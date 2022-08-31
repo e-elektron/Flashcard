@@ -16,11 +16,14 @@ def wasistderartikel():
     tag = soup.td
     artikel = tag.string
 
-    plural = None
-
+    tag = soup.find_all("i")
+    bedeutung = tag[8].get_text()
+    for i in tag:
+        print(i.get_text())
     tags = soup.find_all("b")
     plural = tags[2].get_text()
 
     print(artikel, wort, plural)
+    print(bedeutung)
 while True:
     wasistderartikel()
