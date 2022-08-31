@@ -13,37 +13,14 @@ def wasistderartikel():
     html = urllib.request.urlopen(url, context=ctx).read()
     soup = BeautifulSoup(html, 'html.parser')
 
-    umlaut = None
-    wortbeginn = None
-    wort4 = None
-
     tag = soup.td
     artikel = tag.string
 
-    tags = soup.find_all("b")
-    for tag in tags:
-        if len(tag.contents) > 1:
-            if len(tag.contents[1]) != len(urlinp):
-                wortbeginn = tag.contents[1]
-                umlaut = tag.contents[2].string
-                wort3 = tag.contents[3].string
-                if len(tag.contents) > 4:
-                    wort4 = tag.contents[4].string
-            if wortbeginn is None:
-                wortbeginn = tag.contents[1]
-                wort2 = tag.contents[2].string
+    plural = None
 
-    if umlaut is None:
-        if wort2 is None: plural = wortbeginn
-        plural = wortbeginn + wort2
-    if umlaut is not None:
-        plural = wortbeginn + umlaut
-        if wort3 is not None:
-            plural = wortbeginn + umlaut + wort3
-        if wort4 is not None:
-            plural = wortbeginn + umlaut + wort3 + wort4
+    tags = soup.find_all("b")
+    plural = tags[2].get_text()
 
     print(artikel, wort, plural)
-
 while True:
     wasistderartikel()
